@@ -14,16 +14,21 @@ class Calculator {
   delete() {}
 
   appendNumber(number) {
-    if (number === '.' && this.currentOperand.includes('.')) return
+    if (number === "." && this.currentOperand.includes(".")) return;
     this.currentOperand = this.currentOperand.toString() + number.toString();
   }
 
-  chooseOperation(operation) {}
+  chooseOperation(operation) {
+    this.operation = operation;
+    this.previousOperand = this.currentOperand;
+    this.currentOperand = "";
+  }
 
   compute() {}
 
   updateDisplay() {
     this.currentOperandTextElement.innerText = this.currentOperand;
+    this.previousOperandTextElement.innerText = this.previousOperand;
   }
 }
 
@@ -47,6 +52,13 @@ const calculator = new Calculator(
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
     calculator.appendNumber(button.innerText);
+    calculator.updateDisplay();
+  });
+});
+
+operationButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    calculator.chooseOperation(button.innerText);
     calculator.updateDisplay();
   });
 });
